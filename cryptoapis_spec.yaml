@@ -1,0 +1,94 @@
+openapi: 3.0.0
+info:
+  title: CryptoAPIs Integration
+  version: 1.0.0
+servers:
+  - url: https://rest.cryptoapis.io/v2
+paths:
+  /market-data/assets/assetId/{assetId}:
+    get:
+      summary: Get asset details by asset ID
+      operationId: getAssetDetailsByAssetId
+      parameters:
+        - name: assetId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apiVersion:
+                    type: string
+                  requestId:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      item:
+                        $ref: '#/components/schemas/AssetItem'
+components:
+  schemas:
+    AssetLogo:
+      type: object
+      properties:
+        encoding:
+          type: string
+        imageData:
+          type: string
+        mimeType:
+          type: string
+    LatestRate:
+      type: object
+      properties:
+        amount:
+          type: string
+        calculationTimestamp:
+          type: integer
+        unit:
+          type: string
+    SpecificData:
+      type: object
+      properties:
+        OneHourPriceChangeInPercentage:
+          type: string
+        OneWeekPriceChangeInPercentage:
+          type: string
+        TwentyFourHoursPriceChangeInPercentage:
+          type: string
+        TwentyFourHoursTradingVolume:
+          type: string
+        assetType:
+          type: string
+        circulatingSupply:
+          type: string
+        marketCapInUSD:
+          type: string
+        maxSupply:
+          type: string
+    AssetItem:
+      type: object
+      properties:
+        assetId:
+          type: string
+        assetLogo:
+          $ref: '#/components/schemas/AssetLogo'
+        assetName:
+          type: string
+        assetOriginalSymbol:
+          type: string
+        assetSymbol:
+          type: string
+        assetType:
+          type: string
+        latestRate:
+          $ref: '#/components/schemas/LatestRate'
+        slug:
+          type: string
+        specificData:
+          $ref: '#/components/schemas/SpecificData'
